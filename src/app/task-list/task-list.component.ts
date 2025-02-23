@@ -1,17 +1,19 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { ApiService } from '../api.service';
 import { error } from 'console';
 
 @Component({
   selector: 'app-task-list',
-  imports: [],
+  imports: [CommonModule,FormsModule],
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.css'
 })
 export class TaskListComponent {
 
-  data:any;
+  data:any=[];
+  
   constructor(private apiService:ApiService){
 
   }
@@ -23,28 +25,27 @@ export class TaskListComponent {
     )
   }
 
-// -----------------below code hardcoded values-------
-
-  tasks=[
-    { id:1, name:'Task1'},
-    { id:2, name:'Task2'},
-    { id:3, name:'Task3'}];
-  newTaskName: any;
-
-    addTask(){
-      const newTask={
-        id:this.tasks.length+1,
-        name:this.newTaskName
-      };
-      this.tasks.push(newTask);
-      this.newTaskName='';
+  task: string = ''; 
+  tasks:string[]=[];
+  
+  addTask(){
+    if(this.task.trim()){
+      
+      this.tasks.push(this.task);
     }
+  }
+
+    
 
   editTaskName(task:any){
-    const newName=prompt('Enter new task name:',task.name);
+    const newName=prompt('Enter new task name:',task);
     if(newName){
-      task.name=newName;
-    }
+      const taskIndex = this.tasks.indexOf(task);
+      if(taskIndex!==-1){
+        this.tasks[taskIndex]=newName;
+
+      }
+    } 
   }
 
 }

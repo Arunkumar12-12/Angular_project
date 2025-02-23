@@ -7,8 +7,9 @@ import { Observable } from 'rxjs';
 })
 export class ApiService {
 
+  private apiUrl = 'https://api.example.com/data';
   constructor(private http :HttpClient) { }
   getData():Observable<any>{
-    return this.http.get('url');
+    return this.http.get(this.apiUrl);
   }
 }

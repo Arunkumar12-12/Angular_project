@@ -1,13 +1,14 @@
-<h2>task-list</h2>
+<h2>Task-List</h2>
 <div>
-<input (ngModel) ="newTaskName" placeholder="Enter New task"/>
+<input [(ngModel)] ="task" placeholder="Enter New task"/>
 <button (click)="addTask()">Add Task</button>
 <ul>
     <li *ngFor="let task of tasks">
-    {{task.name}}
+    {{task}}
     <button (click)="editTaskName(task)">Edit</button>
     </li>
 </ul>
 </div>
+
     
 
