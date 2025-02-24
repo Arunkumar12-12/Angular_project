@@ -1,30 +1,37 @@
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../api.service';
 import { error } from 'console';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-task-list',
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule,FormsModule,HttpClientModule],
+  providers: [ApiService],
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.css'
 })
 export class TaskListComponent {
+  users: any[]=[];
+  error: string|null =null;
 
-  data:any=[];
-  
   constructor(private apiService:ApiService){
 
   }
-  ngOnInit(){
-    this.apiService.getData().subscribe((response) => {this.data=response;},
-      (error) => {
+  ngOnInit() {
+    this.apiService.getData().subscribe({
+      next: (data) => {
+        this.users = data;
+        this.tasks=this.users.map(user => user.name);
+
+      },
+      error: (error) => {
+        this.error = 'Failed to fetch data';
         console.error('Error fetching data', error);
       }
-    )
+    });
   }
-
   task: string = ''; 
   tasks:string[]=[];
   

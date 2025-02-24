@@ -7,9 +7,12 @@ import { Observable } from 'rxjs';
 })
 export class ApiService {
 
-  private apiUrl = 'https://api.example.com/data';
+  private apiUrl = 'http://localhost:5000/api/users';
   constructor(private http :HttpClient) { }
+
   getData():Observable<any>{
-    return this.http.get(this.apiUrl);
+
+    return this.http.get<any[]>(this.apiUrl);
+
   }
 }
